@@ -1,6 +1,6 @@
 # Description
 
-This repo show cases the new ```git sparse-checkout``` feature and:
+This repo showcases the new ```git sparse-checkout``` feature and:
 
 - how to checkout parts of a repo
 - how to make changes only on that checked out part
@@ -19,7 +19,7 @@ Assume, you have an upstream repo that already exists with followin structure:
 | |____foo-bar.txt
 ```
 
-## Clone ```child-dir``` the OLD way
+## How to clone ```child-dir``` only (the _OLD_ way)
 
 Let's clone ```child-dir``` only.
 The approach is a little bit different from the regular ```git clone <remote-url>``` approach. We need to init a fresh repo locally:
@@ -76,15 +76,14 @@ child-dir
 
 That's much easier!
 
-## Making changes
+## Make changes
 
 ```bash
 $ echo "some changes" > child-dir/bar.txt
 $ git status
 modified:   child-dir/bar.txt
 git add .
-git commit -m "Make changes on sparse-ch
-eckout"
+git commit -m "Make changes on sparse-checkout"
 git push -u github master
 ```
 
