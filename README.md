@@ -19,9 +19,53 @@ Assume, you have an upstream repo that already exists with followin structure:
 | |____foo-bar.txt
 ```
 
-## Clone ```child-dir```
+## Clone ```child-dir``` the OLD way
 
-Let's clone ```child-dir``` only:
+Let's clone ```child-dir``` only.
+The approach is a little bit different from the regular ```git clone <remote-url>``` approach. We need to init a fresh repo locally:
+
+```bash
+mkdir clone
+cd clone
+git init
+```
+
+In that empty repo, we define the remote and fetch all objects but do not check them out. So the folder remains empty.
+
+```bash
+git remote add -f github git@github.com:HansKre/sparse-checkout.git
+```
+
+Now, we enable the sparse-checkout:
+
+```bash
+git config core.sparseCheckout true
+```
+
+Next, we specify the folders that we want to be part of the sparse-checkout by adding them to ```.git/info/sparse-checkout```
+
+```bash
+echo "child-dir" >> .git/info/sparse-check
+out
+```
+
+We can finally update our local copy by pulling from upstream:
+
+```bash
+git pull github master
+```
+
+And yep, it worked:
+
+```bash
+$ tree
+|____child-dir
+| |____bar.txt
+```
+
+## Clone ```child-dir``` with git version ```2.25.0```
+
+Git ```2.25.0``` includes a new experimental ```git sparse-checkout``` command. Here's how to use it:
 
 ```bash
 $ git sparse-checkout init --cone
@@ -29,6 +73,32 @@ $ git sparse-checkout set child-dir
 $ ls
 child-dir
 ```
+
+That's much easier!
+
+## Making changes
+
+```bash
+$ echo "some changes" > child-dir/bar.txt
+$ git status
+modified:   child-dir/bar.txt
+git add .
+git commit -m "Make changes on sparse-ch
+eckout"
+git push -u github master
+```
+
+If we go to [child-dir/bar.txt](https://github.com/HansKre/sparse-checkout/blob/master/child-dir/bar.txt), we can see that the changes have been successfully added to the repo.
+
+## Filtering aka ```partial clones```
+
+On larger repos you might find filtering aka ```partial clones``` useful:
+
+```bash
+git clone --filter=blob:none --no-checkout git@github.com:HansKre/sparse-checkout.git
+```
+
+Now, you can continue with the ```sparse-checkout``` config to pull only desired folders. Or, of course, you could checkout the entire repo but with the filter applied.
 
 ## Useful links
 
