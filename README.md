@@ -36,7 +36,13 @@ In that empty repo, we define the remote and fetch all objects but do not check 
 git remote add -f github git@github.com:HansKre/sparse-checkout.git
 ```
 
-Now, we enable the sparse-checkout:
+Check the history to make sure it is fetched:
+
+```bash
+git log --oneline
+```
+
+Now, enable the sparse-checkout:
 
 ```bash
 git config core.sparseCheckout true
