@@ -51,7 +51,7 @@ git config core.sparseCheckout true
 Next, we specify the folders that we want to be part of the sparse-checkout by adding them to ```.git/info/sparse-checkout```
 
 ```bash
-echo "child-dir" >> .git/info/sparse-check
+echo "child-dir" >> .git/info/sparse-checkout
 out
 ```
 
