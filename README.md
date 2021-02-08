@@ -52,7 +52,6 @@ Next, we specify the folders that we want to be part of the sparse-checkout by a
 
 ```bash
 echo "child-dir" >> .git/info/sparse-checkout
-out
 ```
 
 We can finally update our local copy by pulling from upstream:
